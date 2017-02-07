@@ -617,6 +617,31 @@ function! s:InitTypes() abort
     let s:known_types.python = type_python
     let s:known_types.pyrex  = type_python
     let s:known_types.cython = type_python
+    " reStructuredText {{{3
+    if s:ctags_is_uctags
+        let type_rst = s:TypeInfo.New()
+        let type_rst.ctagstype = 'reStructuredText'
+        let type_rst.kinds     = [
+            \ {'short' : 'c', 'long' : 'chapters',       'fold' : 0, 'stl' : 1},
+            \ {'short' : 's', 'long' : 'sections',       'fold' : 0, 'stl' : 1},
+            \ {'short' : 'S', 'long' : 'subsections',    'fold' : 0, 'stl' : 1},
+            \ {'short' : 't', 'long' : 'subsubsections', 'fold' : 0, 'stl' : 1}
+        \ ]
+        let type_rst.sro        = '::'   " FIXME
+        let type_rst.kind2scope = {
+            \ 'c' : 'chapter',
+            \ 's' : 'section',
+            \ 'S' : 'subsection',
+            \ 't' : 'subsubsection'
+        \ }
+        let type_rst.scope2kind = {
+            \ 'chapter' : 'c',
+            \ 'section' : 's',
+            \ 'subsection' : 'S',
+            \ 'subsubsection' : 't'
+        \ }
+        let s:known_types.rst = type_rst
+    endif
     " REXX {{{3
     let type_rexx = s:TypeInfo.New()
     let type_rexx.ctagstype = 'rexx'
